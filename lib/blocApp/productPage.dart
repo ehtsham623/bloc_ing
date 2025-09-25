@@ -1,7 +1,7 @@
-import 'package:bloc_ing/productBloc.dart';
-import 'package:bloc_ing/productEvent.dart';
-import 'package:bloc_ing/productModel.dart';
-import 'package:bloc_ing/productState.dart';
+import 'package:bloc_ing/blocApp/productBloc.dart';
+import 'package:bloc_ing/blocApp/productEvent.dart';
+import 'package:bloc_ing/blocApp/productModel.dart';
+import 'package:bloc_ing/blocApp/productState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

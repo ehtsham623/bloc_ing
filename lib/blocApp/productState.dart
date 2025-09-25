@@ -1,4 +1,4 @@
-import 'package:bloc_ing/productModel.dart';
+import 'package:bloc_ing/blocApp/productModel.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ProductState extends Equatable {

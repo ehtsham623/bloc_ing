@@ -1,7 +1,7 @@
-import 'package:bloc_ing/productEvent.dart';
-import 'package:bloc_ing/productRepository.dart';
-import 'package:bloc_ing/productRepositoryImp.dart';
-import 'package:bloc_ing/productState.dart';
+import 'package:bloc_ing/blocApp/productEvent.dart';
+import 'package:bloc_ing/blocApp/productRepository.dart';
+import 'package:bloc_ing/blocApp/productRepositoryImp.dart';
+import 'package:bloc_ing/blocApp/productState.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 

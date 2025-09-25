@@ -1,5 +1,5 @@
-import 'package:bloc_ing/productModel.dart';
-import 'package:bloc_ing/productRepository.dart';
+import 'package:bloc_ing/blocApp/productModel.dart';
+import 'package:bloc_ing/blocApp/productRepository.dart';
 
 class InMemoryProductRepository implements ProductRepository {
   final List<Product> _storage = [];
