@@ -14,9 +14,9 @@ class ProductPage extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<ProductCubit, ProductState>(
           builder: (context, state) {
-            if (state.status == ProductStatus.loading) {
+            if (state == ProductLoading()) {
               return Center(child: CircularProgressIndicator());
-            } else if (state.status == ProductStatus.success) {
+            } else if (state is ProductLoaded) {
               final products = state.products;
               if (products.isEmpty) return Center(child: Text('No products'));
               return ListView.separated(
@@ -41,8 +41,8 @@ class ProductPage extends StatelessWidget {
                   );
                 },
               );
-            } else if (state.status == ProductStatus.failure) {
-              return Center(child: Text('Error: ${state.errorMessage}'));
+            } else if (state is ProductError) {
+              return Center(child: Text('Error: ${state.message}'));
             }
             return Center(child: Text('Press + to add product'));
           },

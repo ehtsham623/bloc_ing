@@ -5,49 +5,55 @@ import 'package:bloc_ing/cubitBlocApp/productState.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  ProductCubit() : super(const ProductState());
+  ProductCubit() : super(ProductInitial()) {
+    loadProducts();
+  }
   final ProductRepository repository = InMemoryProductRepository();
-  
+
   Future<void> loadProducts() async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(ProductLoading());
     try {
       final items = await repository.fetchAll();
-      emit(state.copyWith(status: ProductStatus.success, products: items));
+      emit(ProductLoaded(items));
     } catch (e) {
-      emit(state.copyWith(status: ProductStatus.failure, errorMessage: e.toString()));
+      emit(ProductError(e.toString()));
     }
   }
 
   Future<void> addProduct(Product product) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(ProductLoading());
     try {
       final created = await repository.create(product);
-      final updated = [created, ...state.products];
-      emit(state.copyWith(status: ProductStatus.success, products: updated));
+      final current = (state as ProductLoaded).products;
+      final updated = [created, ...current];
+
+      emit(ProductLoaded(updated));
     } catch (e) {
-      emit(state.copyWith(status: ProductStatus.failure, errorMessage: e.toString()));
+      emit(ProductError(e.toString()));
     }
   }
 
   Future<void> updateProduct(Product product) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(ProductLoading());
     try {
       final updatedProduct = await repository.update(product);
-      final updated = state.products.map((p) => p.id == updatedProduct.id ? updatedProduct : p).toList();
-      emit(state.copyWith(status: ProductStatus.success, products: updated));
+      final current = (state as ProductLoaded).products;
+      final updated = current.map((p) => p.id == updatedProduct.id ? updatedProduct : p).toList();
+      emit(ProductLoaded(updated));
     } catch (e) {
-      emit(state.copyWith(status: ProductStatus.failure, errorMessage: e.toString()));
+      emit(ProductError(e.toString()));
     }
   }
 
   Future<void> deleteProduct(String id) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(ProductLoading());
     try {
       await repository.delete(id);
-      final updated = state.products.where((p) => p.id != id).toList();
-      emit(state.copyWith(status: ProductStatus.success, products: updated));
+      final current = (state as ProductLoaded).products;
+      final updated = current.where((p) => p.id != id).toList();
+      emit(ProductLoaded(updated));
     } catch (e) {
-      emit(state.copyWith(status: ProductStatus.failure, errorMessage: e.toString()));
+      emit(ProductError(e.toString()));
     }
   }
 }
